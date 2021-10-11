@@ -1,0 +1,53 @@
+<?php
+/**
+ * OneJobCode
+ *
+ * NOTICE OF LICENSE
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to https://www.onejobcode.com for more information.
+ *
+ * @category OneJobCode
+ *
+ * @copyright Copyright (c) 2021 One Job Code (https://www.onejobcode.com)
+ *
+ * @author One Job Code <engineer@onejobcode.com>
+ */
+
+/**
+ * @var \Magento\Catalog\Block\Product\View $block
+ * @see \Magento\Catalog\Block\Product\View
+ */
+?>
+
+<?php
+/** @var \OneJobCode\DorisWidget\Helper\Configuration $helper */
+$helper = $this->helper(\OneJobCode\DorisWidget\Helper\Configuration::class);
+?>
+
+<?php if ($helper->isEnable()): ?>
+    <div data-bind="scope: 'doris-tryon'">
+        <!-- ko template: 'OneJobCode_DorisWidget/tryon' --><!-- /ko -->
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "doris-tryon": {
+                            "component": "OneJobCode_DorisWidget/js/tryon",
+                            "options": {
+                                "api_key": "<?= $helper->getApiKey()?>",
+                                "color": "<?= $helper->getColor()?>"
+                            },
+                            "product": <?= $block->getProduct()->toJson() ?>
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<?php endif; ?>
